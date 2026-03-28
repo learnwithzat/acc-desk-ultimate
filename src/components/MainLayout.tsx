@@ -3,7 +3,7 @@
 'use client';
 
 import React, { ReactNode, useState } from 'react';
-import Link from 'next/link';
+import Sidebar from './Sidebar';
 import { HiMenu } from 'react-icons/hi';
 
 interface MainLayoutProps {
@@ -14,63 +14,43 @@ export default function MainLayout({ children }: MainLayoutProps) {
 	const [sidebarOpen, setSidebarOpen] = useState(false);
 
 	return (
-		<div className='flex h-screen bg-gray-50'>
-			{/* Mobile Overlay */}
+		<div className='flex h-screen bg-gray-50 dark:bg-gray-900 transition-colors duration-200'>
+			{/* Sidebar for desktop */}
+			<div className='hidden md:flex'>
+				<Sidebar />
+			</div>
+
+			{/* Mobile sidebar overlay */}
 			{sidebarOpen && (
 				<div
-					className='fixed inset-0 bg-black bg-opacity-30 z-10'
+					className='fixed inset-0 bg-black bg-opacity-30 z-10 md:hidden'
 					onClick={() => setSidebarOpen(false)}
 				/>
 			)}
 
-			{/* Sidebar */}
-			<aside
-				className={`fixed z-20 top-0 left-0 h-full w-64 bg-blue-600 text-white transform ${
+			{/* Mobile sidebar */}
+			<div
+				className={`fixed z-20 top-0 left-0 h-full md:hidden transform bg-blue-600 dark:bg-gray-900 text-white w-64 transition-transform duration-300 ${
 					sidebarOpen ? 'translate-x-0' : '-translate-x-full'
-				} transition-transform duration-300 ease-in-out md:translate-x-0 md:static md:flex md:flex-col`}>
-				<div className='p-6 text-2xl font-bold border-b border-blue-500'>
-					Billing App
-				</div>
-				<nav className='flex-1 p-4 space-y-2'>
-					<Link
-						href='/'
-						className='block py-2 px-4 rounded hover:bg-blue-500'>
-						Dashboard
-					</Link>
-					<Link
-						href='/invoices'
-						className='block py-2 px-4 rounded hover:bg-blue-500'>
-						Invoices
-					</Link>
-					<Link
-						href='/customers'
-						className='block py-2 px-4 rounded hover:bg-blue-500'>
-						Customers
-					</Link>
-					<Link
-						href='/products'
-						className='block py-2 px-4 rounded hover:bg-blue-500'>
-						Products
-					</Link>
-				</nav>
-				<div className='p-4 border-t border-blue-500 text-sm'>
-					© {new Date().getFullYear()}
-				</div>
-			</aside>
+				} transition-colors duration-200 shadow-xl`}>
+				<Sidebar />
+			</div>
 
-			{/* Main Content */}
+			{/* Main content */}
 			<div className='flex-1 flex flex-col'>
-				{/* Top bar */}
-				<header className='bg-white shadow-md p-4 flex items-center md:hidden'>
+				{/* Top bar for mobile */}
+				<header className='bg-white dark:bg-gray-800 dark:text-white shadow-md p-4 flex items-center md:hidden transition-colors duration-200'>
 					<button
 						onClick={() => setSidebarOpen(!sidebarOpen)}
-						className='text-2xl text-blue-600'>
+						className='text-2xl text-blue-600 dark:text-blue-400'>
 						<HiMenu />
 					</button>
-					<h1 className='ml-4 text-xl font-bold'>Billing App</h1>
+					<h1 className='ml-4 text-xl font-bold'>AccDesk Ultimate</h1>
 				</header>
 
-				<main className='flex-1 overflow-auto p-6'>{children}</main>
+				<main className='flex-1 overflow-auto p-6 text-gray-900 dark:text-gray-100'>
+					{children}
+				</main>
 			</div>
 		</div>
 	);

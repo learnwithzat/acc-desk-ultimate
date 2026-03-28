@@ -1,15 +1,10 @@
 /** @format */
 
-import MainLayout from '@/components/MainLayout';
+'use client';
+
 import './globals.css';
-import { Inter } from 'next/font/google';
-
-const inter = Inter({ subsets: ['latin'] });
-
-export const metadata = {
-	title: 'Billing App',
-	description: 'Billing and invoice management app',
-};
+import { ThemeProvider } from './context/ThemeContext';
+import MainLayout from '@/components/MainLayout';
 
 export default function RootLayout({
 	children,
@@ -17,9 +12,13 @@ export default function RootLayout({
 	children: React.ReactNode;
 }) {
 	return (
-		<html lang='en'>
-			<body className={`${inter.className}`}>
-				<MainLayout>{children}</MainLayout>
+		<html
+			lang='en'
+			suppressHydrationWarning>
+			<body>
+				<ThemeProvider>
+					<MainLayout>{children}</MainLayout>
+				</ThemeProvider>
 			</body>
 		</html>
 	);
