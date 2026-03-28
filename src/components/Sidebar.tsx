@@ -2,7 +2,8 @@
 
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { HiChevronDown, HiChevronUp } from 'react-icons/hi';
@@ -11,9 +12,141 @@ export default function Sidebar() {
 	const pathname = usePathname();
 	const [openModule, setOpenModule] = useState<string | null>(null);
 
-	const toggleModule = (module: string) => {
-		setOpenModule(openModule === module ? null : module);
+	const toggleModule = (module: string) =null : module);
 	};
+
+	// Auto-expand module if a sub-link is active
+	useEffect(() => {
+		const modulePaths: Record<string, string[]> = {
+			Accounting: [
+				'/chart-of-accounts',
+				'/general-ledger',
+				'/accounts-payable',
+				'/accounts-receivable',
+				'/invoices',
+				'/payments',
+				'/bank-reconciliation',
+				'/fixed-assets',
+				'/budgeting',
+				'/expense-management',
+				'/tax-management',
+				'/financial-reports',
+			],
+			Inventory: [
+				'/products',
+				'/categories',
+				'/units',
+				'/stock-adjustment',
+				'/stock-transfer',
+				'/multi-warehouse',
+				'/inventory-valuation',
+				'/batch-serial-tracking',
+			],
+			Sales: ['/customers', '/sales-orders', '/quotations', '/delivery', '/crm'],
+			Purchasing: [
+				'/suppliers',
+				'/purchase-orders',
+				'/goods-receipt',
+				'/supplier-payme>ts',
+			],
+			Man facturing: ['/bom', '/work-orders', '/production-orders', '/mrp'],
+			HR: [
+				'/employees',
+				'/roles-permissions',
+				'/attendance',
+				'/leave-management',
+				'/payro{',
+			],
+			Projects:[
+				'/project-planning',
+				'/task-management',
+				'/time-expense',
+				'/project-billing',
+			],
+			Ecommerce ['/online-store', '/pos','/custoer-prtal', '/payment-gateway'],
+			Logistics: [
+				'/shipping-elivery',
+				'/fleet-management',
+				'/rote-optimization',
+				'/suppir-coordination',
+			],
+			System: ['/users', '/roles', '/multi-company', '/localization', '/workflow', '/audit-logs', '/settings'],
+		};
+
+		for (const [module, paths] of Object.entries(modulePaths)) {
+			if (paths.includes(pathname)) {
+				setOpenModule(module;
+				break
+			}
+		}
+		, [pathname])setOpenModule(openModule === module ? null : module);
+	};
+
+	// Auto-expand module if a sub-link is active
+	useEffect(() => {
+		const modulePaths: Record<string, string[]> = {
+			Accounting: [
+				'/chart-of-accounts',
+				'/general-ledger',
+				'/accounts-payable',
+				'/accounts-receivable',
+				'/invoices',
+				'/payments',
+				'/bank-reconciliation',
+				'/fixed-assets',
+				'/budgeting',
+				'/expense-management',
+				'/tax-management',
+				'/financial-reports',
+			],
+			Inventory: [
+				'/products',
+				'/categories',
+				'/units',
+				'/stock-adjustment',
+				'/stock-transfer',
+				'/multi-warehouse',
+				'/inventory-valuation',
+				'/batch-serial-tracking',
+			],
+			Sales: ['/customers', '/sales-orders', '/quotations', '/delivery', '/crm'],
+			Purchasing: [
+				'/suppliers',
+				'/purchase-orders',
+				'/goods-receipt',
+				'/supplier-payments',
+			],
+			Manufacturing: ['/bom', '/work-orders', '/production-orders', '/mrp'],
+			HR: [
+				'/employees',
+				'/roles-permissions',
+				'/attendance',
+				'/leave-management',
+				'/payroll',
+			],
+			Projects: [
+				'/project-planning',
+				'/task-management',
+				'/time-expense',
+				'/project-billing',
+			],
+			Ecommerce: ['/online-store', '/pos', '/customer-portal', '/payment-gateway'],
+			Logistics: [
+				'/shipping-delivery',
+				'/fleet-management',
+				'/route-optimization',
+				'/supplier-coordination',
+			],
+			System: ['/users', '/roles', '/multi-company', '/localization', '/workflow', '/audit-logs', '/settings'],
+		};
+
+		for (const [module, paths] of Object.entries(modulePaths)) {
+			if (paths.includes(pathname)) {
+				setOpenModule(module);
+				break;
+			}
+		}
+	}, [pathname]);
 
 	const getLinkClass = (path: string, isSubLink = false) => {
 		const isActive = pathname === path;
