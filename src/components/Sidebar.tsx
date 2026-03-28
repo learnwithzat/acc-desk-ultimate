@@ -3,148 +3,153 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { HiChevronDown, HiChevronUp } from 'react-icons/hi';
+
+interface NavModule {
+	id: string;
+	label: string;
+	subLinks: { href: string; label: string }[];
+}
+
+const MENU_CONFIG: NavModule[] = [
+	{
+		id: 'Accounting',
+		label: 'Accounting & Finance',
+		subLinks: [
+			{ href: '/chart-of-accounts', label: 'Chart of Accounts' },
+			{ href: '/general-ledger', label: 'General Ledger' },
+			{ href: '/accounts-payable', label: 'Accounts Payable' },
+			{ href: '/accounts-receivable', label: 'Accounts Receivable' },
+			{ href: '/invoices', label: 'Invoicing / Billing' },
+			{ href: '/payments', label: 'Payments & Receipts' },
+			{ href: '/bank-reconciliation', label: 'Bank Reconciliation' },
+			{ href: '/fixed-assets', label: 'Fixed Assets' },
+			{ href: '/budgeting', label: 'Budgeting & Forecasting' },
+			{ href: '/expense-management', label: 'Expense Management' },
+			{ href: '/tax-management', label: 'Tax Management' },
+			{ href: '/financial-reports', label: 'Financial Reports' },
+		],
+	},
+	{
+		id: 'Inventory',
+		label: 'Inventory & Warehouse',
+		subLinks: [
+			{ href: '/products', label: 'Products / Items' },
+			{ href: '/categories', label: 'Categories' },
+			{ href: '/units', label: 'Units / UOM' },
+			{ href: '/stock-adjustment', label: 'Stock Adjustment' },
+			{ href: '/stock-transfer', label: 'Stock Transfer' },
+			{ href: '/multi-warehouse', label: 'Multi-Warehouse Management' },
+			{ href: '/inventory-valuation', label: 'Inventory Valuation' },
+			{ href: '/batch-serial-tracking', label: 'Batch / Serial Tracking' },
+		],
+	},
+	{
+		id: 'Sales',
+		label: 'Sales & CRM',
+		subLinks: [
+			{ href: '/customers', label: 'Customer Management' },
+			{ href: '/sales-orders', label: 'Sales Orders' },
+			{ href: '/quotations', label: 'Quotations / Estimates' },
+			{ href: '/delivery', label: 'Shipping / Delivery' },
+			{ href: '/crm', label: 'CRM / Leads' },
+		],
+	},
+	{
+		id: 'Purchasing',
+		label: 'Purchasing & Procurement',
+		subLinks: [
+			{ href: '/suppliers', label: 'Supplier / Vendor Management' },
+			{ href: '/purchase-orders', label: 'Purchase Orders' },
+			{ href: '/goods-receipt', label: 'Goods Receipt' },
+			{ href: '/supplier-payments', label: 'Supplier Payments' },
+		],
+	},
+	{
+		id: 'Manufacturing',
+		label: 'Manufacturing / Production',
+		subLinks: [
+			{ href: '/bom', label: 'Bill of Materials (BOM)' },
+			{ href: '/work-orders', label: 'Work Orders' },
+			{ href: '/production-orders', label: 'Production Orders' },
+			{ href: '/mrp', label: 'Material Requirement Planning' },
+		],
+	},
+	{
+		id: 'HR',
+		label: 'Human Resources',
+		subLinks: [
+			{ href: '/employees', label: 'Employee Management' },
+			{ href: '/roles-permissions', label: 'Roles & Permissions' },
+			{ href: '/attendance', label: 'Attendance / Time Tracking' },
+			{ href: '/leave-management', label: 'Leave Management' },
+			{ href: '/payroll', label: 'Payroll' },
+		],
+	},
+	{
+		id: 'Projects',
+		label: 'Projects / Services',
+		subLinks: [
+			{ href: '/project-planning', label: 'Project Planning' },
+			{ href: '/task-management', label: 'Task Management' },
+			{ href: '/time-expense', label: 'Time & Expense Tracking' },
+			{ href: '/project-billing', label: 'Project Billing' },
+		],
+	},
+	{
+		id: 'Ecommerce',
+		label: 'E-commerce / POS',
+		subLinks: [
+			{ href: '/online-store', label: 'Online Store Integration' },
+			{ href: '/pos', label: 'Point of Sale' },
+			{ href: '/customer-portal', label: 'Customer Portal' },
+			{ href: '/payment-gateway', label: 'Payment Gateway' },
+		],
+	},
+	{
+		id: 'Logistics',
+		label: 'Supply Chain / Logistics',
+		subLinks: [
+			{ href: '/shipping-delivery', label: 'Shipping & Delivery' },
+			{ href: '/fleet-management', label: 'Fleet / Vehicle Management' },
+			{ href: '/route-optimization', label: 'Route Optimization' },
+			{ href: '/supplier-coordination', label: 'Supplier Coordination' },
+		],
+	},
+	{
+		id: 'System',
+		label: 'System / Settings',
+		subLinks: [
+			{ href: '/users', label: 'User Management' },
+			{ href: '/roles', label: 'Roles & Permissions' },
+			{ href: '/multi-company', label: 'Multi-Company / Branch' },
+			{
+				href: '/localization',
+				label: 'Localization (Currency / Language / Taxes)',
+			},
+			{ href: '/workflow', label: 'Workflow Automation' },
+			{ href: '/audit-logs', label: 'Audit Logs' },
+			{ href: '/settings', label: 'Settings' },
+		],
+	},
+];
 
 export default function Sidebar() {
 	const pathname = usePathname();
 	const [openModule, setOpenModule] = useState<string | null>(null);
 
-	const toggleModule = (module: string) =null : module);
+	const toggleModule = (module: string) => {
+		setOpenModule(openModule === module ? null : module);
 	};
 
-	// Auto-expand module if a sub-link is active
 	useEffect(() => {
-		const modulePaths: Record<string, string[]> = {
-			Accounting: [
-				'/chart-of-accounts',
-				'/general-ledger',
-				'/accounts-payable',
-				'/accounts-receivable',
-				'/invoices',
-				'/payments',
-				'/bank-reconciliation',
-				'/fixed-assets',
-				'/budgeting',
-				'/expense-management',
-				'/tax-management',
-				'/financial-reports',
-			],
-			Inventory: [
-				'/products',
-				'/categories',
-				'/units',
-				'/stock-adjustment',
-				'/stock-transfer',
-				'/multi-warehouse',
-				'/inventory-valuation',
-				'/batch-serial-tracking',
-			],
-			Sales: ['/customers', '/sales-orders', '/quotations', '/delivery', '/crm'],
-			Purchasing: [
-				'/suppliers',
-				'/purchase-orders',
-				'/goods-receipt',
-				'/supplier-payme>ts',
-			],
-			Man facturing: ['/bom', '/work-orders', '/production-orders', '/mrp'],
-			HR: [
-				'/employees',
-				'/roles-permissions',
-				'/attendance',
-				'/leave-management',
-				'/payro{',
-			],
-			Projects:[
-				'/project-planning',
-				'/task-management',
-				'/time-expense',
-				'/project-billing',
-			],
-			Ecommerce ['/online-store', '/pos','/custoer-prtal', '/payment-gateway'],
-			Logistics: [
-				'/shipping-elivery',
-				'/fleet-management',
-				'/rote-optimization',
-				'/suppir-coordination',
-			],
-			System: ['/users', '/roles', '/multi-company', '/localization', '/workflow', '/audit-logs', '/settings'],
-		};
-
-		for (const [module, paths] of Object.entries(modulePaths)) {
-			if (paths.includes(pathname)) {
-				setOpenModule(module;
-				break
-			}
-		}
-		, [pathname])setOpenModule(openModule === module ? null : module);
-	};
-
-	// Auto-expand module if a sub-link is active
-	useEffect(() => {
-		const modulePaths: Record<string, string[]> = {
-			Accounting: [
-				'/chart-of-accounts',
-				'/general-ledger',
-				'/accounts-payable',
-				'/accounts-receivable',
-				'/invoices',
-				'/payments',
-				'/bank-reconciliation',
-				'/fixed-assets',
-				'/budgeting',
-				'/expense-management',
-				'/tax-management',
-				'/financial-reports',
-			],
-			Inventory: [
-				'/products',
-				'/categories',
-				'/units',
-				'/stock-adjustment',
-				'/stock-transfer',
-				'/multi-warehouse',
-				'/inventory-valuation',
-				'/batch-serial-tracking',
-			],
-			Sales: ['/customers', '/sales-orders', '/quotations', '/delivery', '/crm'],
-			Purchasing: [
-				'/suppliers',
-				'/purchase-orders',
-				'/goods-receipt',
-				'/supplier-payments',
-			],
-			Manufacturing: ['/bom', '/work-orders', '/production-orders', '/mrp'],
-			HR: [
-				'/employees',
-				'/roles-permissions',
-				'/attendance',
-				'/leave-management',
-				'/payroll',
-			],
-			Projects: [
-				'/project-planning',
-				'/task-management',
-				'/time-expense',
-				'/project-billing',
-			],
-			Ecommerce: ['/online-store', '/pos', '/customer-portal', '/payment-gateway'],
-			Logistics: [
-				'/shipping-delivery',
-				'/fleet-management',
-				'/route-optimization',
-				'/supplier-coordination',
-			],
-			System: ['/users', '/roles', '/multi-company', '/localization', '/workflow', '/audit-logs', '/settings'],
-		};
-
-		for (const [module, paths] of Object.entries(modulePaths)) {
-			if (paths.includes(pathname)) {
-				setOpenModule(module);
-				break;
-			}
+		const activeModule = MENU_CONFIG.find((module) =>
+			module.subLinks.some((link) => link.href === pathname),
+		);
+		if (activeModule) {
+			setOpenModule(activeModule.id);
 		}
 	}, [pathname]);
 
@@ -171,450 +176,30 @@ export default function Sidebar() {
 					Dashboard
 				</Link>
 
-				{/* Accounting & Finance */}
-				<div>
-					<button
-						onClick={() => toggleModule('Accounting')}
-						className='w-full flex justify-between items-center py-2 px-4 rounded hover:bg-blue-500 dark:hover:bg-gray-800 transition-colors'>
-						Accounting & Finance
-						{openModule === 'Accounting' ?
-							<HiChevronUp />
-						:	<HiChevronDown />}
-					</button>
-					{openModule === 'Accounting' && (
-						<div className='ml-4 mt-2 space-y-1 text-sm'>
-							<Link
-								href='/chart-of-accounts'
-								className={getLinkClass('/chart-of-accounts', true)}>
-								Chart of Accounts
-							</Link>
-							<Link
-								href='/general-ledger'
-								className={getLinkClass('/general-ledger', true)}>
-								General Ledger
-							</Link>
-							<Link
-								href='/accounts-payable'
-								className={getLinkClass('/accounts-payable', true)}>
-								Accounts Payable
-							</Link>
-							<Link
-								href='/accounts-receivable'
-								className={getLinkClass('/accounts-receivable', true)}>
-								Accounts Receivable
-							</Link>
-							<Link
-								href='/invoices'
-								className={getLinkClass('/invoices', true)}>
-								Invoicing / Billing
-							</Link>
-							<Link
-								href='/payments'
-								className={getLinkClass('/payments', true)}>
-								Payments & Receipts
-							</Link>
-							<Link
-								href='/bank-reconciliation'
-								className={getLinkClass('/bank-reconciliation', true)}>
-								Bank Reconciliation
-							</Link>
-							<Link
-								href='/fixed-assets'
-								className={getLinkClass('/fixed-assets', true)}>
-								Fixed Assets
-							</Link>
-							<Link
-								href='/budgeting'
-								className={getLinkClass('/budgeting', true)}>
-								Budgeting & Forecasting
-							</Link>
-							<Link
-								href='/expense-management'
-								className={getLinkClass('/expense-management', true)}>
-								Expense Management
-							</Link>
-							<Link
-								href='/tax-management'
-								className={getLinkClass('/tax-management', true)}>
-								Tax Management
-							</Link>
-							<Link
-								href='/financial-reports'
-								className={getLinkClass('/financial-reports', true)}>
-								Financial Reports
-							</Link>
-						</div>
-					)}
-				</div>
-
-				{/* Inventory & Warehouse */}
-				<div>
-					<button
-						onClick={() => toggleModule('Inventory')}
-						className='w-full flex justify-between items-center py-2 px-4 rounded hover:bg-blue-500 dark:hover:bg-gray-800 transition-colors'>
-						Inventory & Warehouse
-						{openModule === 'Inventory' ?
-							<HiChevronUp />
-						:	<HiChevronDown />}
-					</button>
-					{openModule === 'Inventory' && (
-						<div className='ml-4 mt-2 space-y-1 text-sm'>
-							<Link
-								href='/products'
-								className={getLinkClass('/products', true)}>
-								Products / Items
-							</Link>
-							<Link
-								href='/categories'
-								className={getLinkClass('/categories', true)}>
-								Categories
-							</Link>
-							<Link
-								href='/units'
-								className={getLinkClass('/units', true)}>
-								Units / UOM
-							</Link>
-							<Link
-								href='/stock-adjustment'
-								className={getLinkClass('/stock-adjustment', true)}>
-								Stock Adjustment
-							</Link>
-							<Link
-								href='/stock-transfer'
-								className={getLinkClass('/stock-transfer', true)}>
-								Stock Transfer
-							</Link>
-							<Link
-								href='/multi-warehouse'
-								className={getLinkClass('/multi-warehouse', true)}>
-								Multi-Warehouse Management
-							</Link>
-							<Link
-								href='/inventory-valuation'
-								className={getLinkClass('/inventory-valuation', true)}>
-								Inventory Valuation
-							</Link>
-							<Link
-								href='/batch-serial-tracking'
-								className={getLinkClass('/batch-serial-tracking', true)}>
-								Batch / Serial Tracking
-							</Link>
-						</div>
-					)}
-				</div>
-
-				{/* Sales & CRM */}
-				<div>
-					<button
-						onClick={() => toggleModule('Sales')}
-						className='w-full flex justify-between items-center py-2 px-4 rounded hover:bg-blue-500 dark:hover:bg-gray-800 transition-colors'>
-						Sales & CRM
-						{openModule === 'Sales' ?
-							<HiChevronUp />
-						:	<HiChevronDown />}
-					</button>
-					{openModule === 'Sales' && (
-						<div className='ml-4 mt-2 space-y-1 text-sm'>
-							<Link
-								href='/customers'
-								className={getLinkClass('/customers', true)}>
-								Customer Management
-							</Link>
-							<Link
-								href='/sales-orders'
-								className={getLinkClass('/sales-orders', true)}>
-								Sales Orders
-							</Link>
-							<Link
-								href='/quotations'
-								className={getLinkClass('/quotations', true)}>
-								Quotations / Estimates
-							</Link>
-							<Link
-								href='/delivery'
-								className={getLinkClass('/delivery', true)}>
-								Shipping / Delivery
-							</Link>
-							<Link
-								href='/crm'
-								className={getLinkClass('/crm', true)}>
-								CRM / Leads
-							</Link>
-						</div>
-					)}
-				</div>
-
-				{/* Purchasing & Procurement */}
-				<div>
-					<button
-						onClick={() => toggleModule('Purchasing')}
-						className='w-full flex justify-between items-center py-2 px-4 rounded hover:bg-blue-500 dark:hover:bg-gray-800 transition-colors'>
-						Purchasing & Procurement
-						{openModule === 'Purchasing' ?
-							<HiChevronUp />
-						:	<HiChevronDown />}
-					</button>
-					{openModule === 'Purchasing' && (
-						<div className='ml-4 mt-2 space-y-1 text-sm'>
-							<Link
-								href='/suppliers'
-								className={getLinkClass('/suppliers', true)}>
-								Supplier / Vendor Management
-							</Link>
-							<Link
-								href='/purchase-orders'
-								className={getLinkClass('/purchase-orders', true)}>
-								Purchase Orders
-							</Link>
-							<Link
-								href='/goods-receipt'
-								className={getLinkClass('/goods-receipt', true)}>
-								Goods Receipt
-							</Link>
-							<Link
-								href='/supplier-payments'
-								className={getLinkClass('/supplier-payments', true)}>
-								Supplier Payments
-							</Link>
-						</div>
-					)}
-				</div>
-
-				{/* Manufacturing / Production */}
-				<div>
-					<button
-						onClick={() => toggleModule('Manufacturing')}
-						className='w-full flex justify-between items-center py-2 px-4 rounded hover:bg-blue-500 dark:hover:bg-gray-800 transition-colors'>
-						Manufacturing / Production
-						{openModule === 'Manufacturing' ?
-							<HiChevronUp />
-						:	<HiChevronDown />}
-					</button>
-					{openModule === 'Manufacturing' && (
-						<div className='ml-4 mt-2 space-y-1 text-sm'>
-							<Link
-								href='/bom'
-								className={getLinkClass('/bom', true)}>
-								Bill of Materials (BOM)
-							</Link>
-							<Link
-								href='/work-orders'
-								className={getLinkClass('/work-orders', true)}>
-								Work Orders
-							</Link>
-							<Link
-								href='/production-orders'
-								className={getLinkClass('/production-orders', true)}>
-								Production Orders
-							</Link>
-							<Link
-								href='/mrp'
-								className={getLinkClass('/mrp', true)}>
-								Material Requirement Planning
-							</Link>
-						</div>
-					)}
-				</div>
-
-				{/* HR & Payroll */}
-				<div>
-					<button
-						onClick={() => toggleModule('HR')}
-						className='w-full flex justify-between items-center py-2 px-4 rounded hover:bg-blue-500 dark:hover:bg-gray-800 transition-colors'>
-						Human Resources
-						{openModule === 'HR' ?
-							<HiChevronUp />
-						:	<HiChevronDown />}
-					</button>
-					{openModule === 'HR' && (
-						<div className='ml-4 mt-2 space-y-1 text-sm'>
-							<Link
-								href='/employees'
-								className={getLinkClass('/employees', true)}>
-								Employee Management
-							</Link>
-							<Link
-								href='/roles-permissions'
-								className={getLinkClass('/roles-permissions', true)}>
-								Roles & Permissions
-							</Link>
-							<Link
-								href='/attendance'
-								className={getLinkClass('/attendance', true)}>
-								Attendance / Time Tracking
-							</Link>
-							<Link
-								href='/leave-management'
-								className={getLinkClass('/leave-management', true)}>
-								Leave Management
-							</Link>
-							<Link
-								href='/payroll'
-								className={getLinkClass('/payroll', true)}>
-								Payroll
-							</Link>
-						</div>
-					)}
-				</div>
-
-				{/* Projects / Service */}
-				<div>
-					<button
-						onClick={() => toggleModule('Projects')}
-						className='w-full flex justify-between items-center py-2 px-4 rounded hover:bg-blue-500 dark:hover:bg-gray-800 transition-colors'>
-						Projects / Services
-						{openModule === 'Projects' ?
-							<HiChevronUp />
-						:	<HiChevronDown />}
-					</button>
-					{openModule === 'Projects' && (
-						<div className='ml-4 mt-2 space-y-1 text-sm'>
-							<Link
-								href='/project-planning'
-								className={getLinkClass('/project-planning', true)}>
-								Project Planning
-							</Link>
-							<Link
-								href='/task-management'
-								className={getLinkClass('/task-management', true)}>
-								Task Management
-							</Link>
-							<Link
-								href='/time-expense'
-								className={getLinkClass('/time-expense', true)}>
-								Time & Expense Tracking
-							</Link>
-							<Link
-								href='/project-billing'
-								className={getLinkClass('/project-billing', true)}>
-								Project Billing
-							</Link>
-						</div>
-					)}
-				</div>
-
-				{/* E-commerce / POS */}
-				<div>
-					<button
-						onClick={() => toggleModule('Ecommerce')}
-						className='w-full flex justify-between items-center py-2 px-4 rounded hover:bg-blue-500 dark:hover:bg-gray-800 transition-colors'>
-						E-commerce / POS
-						{openModule === 'Ecommerce' ?
-							<HiChevronUp />
-						:	<HiChevronDown />}
-					</button>
-					{openModule === 'Ecommerce' && (
-						<div className='ml-4 mt-2 space-y-1 text-sm'>
-							<Link
-								href='/online-store'
-								className={getLinkClass('/online-store', true)}>
-								Online Store Integration
-							</Link>
-							<Link
-								href='/pos'
-								className={getLinkClass('/pos', true)}>
-								Point of Sale
-							</Link>
-							<Link
-								href='/customer-portal'
-								className={getLinkClass('/customer-portal', true)}>
-								Customer Portal
-							</Link>
-							<Link
-								href='/payment-gateway'
-								className={getLinkClass('/payment-gateway', true)}>
-								Payment Gateway
-							</Link>
-						</div>
-					)}
-				</div>
-
-				{/* Supply Chain / Logistics */}
-				<div>
-					<button
-						onClick={() => toggleModule('Logistics')}
-						className='w-full flex justify-between items-center py-2 px-4 rounded hover:bg-blue-500 dark:hover:bg-gray-800 transition-colors'>
-						Supply Chain / Logistics
-						{openModule === 'Logistics' ?
-							<HiChevronUp />
-						:	<HiChevronDown />}
-					</button>
-					{openModule === 'Logistics' && (
-						<div className='ml-4 mt-2 space-y-1 text-sm'>
-							<Link
-								href='/shipping-delivery'
-								className={getLinkClass('/shipping-delivery', true)}>
-								Shipping & Delivery
-							</Link>
-							<Link
-								href='/fleet-management'
-								className={getLinkClass('/fleet-management', true)}>
-								Fleet / Vehicle Management
-							</Link>
-							<Link
-								href='/route-optimization'
-								className={getLinkClass('/route-optimization', true)}>
-								Route Optimization
-							</Link>
-							<Link
-								href='/supplier-coordination'
-								className={getLinkClass('/supplier-coordination', true)}>
-								Supplier Coordination
-							</Link>
-						</div>
-					)}
-				</div>
-
-				{/* System / Settings */}
-				<div>
-					<button
-						onClick={() => toggleModule('System')}
-						className='w-full flex justify-between items-center py-2 px-4 rounded hover:bg-blue-500 dark:hover:bg-gray-800 transition-colors'>
-						System / Settings
-						{openModule === 'System' ?
-							<HiChevronUp />
-						:	<HiChevronDown />}
-					</button>
-					{openModule === 'System' && (
-						<div className='ml-4 mt-2 space-y-1 text-sm'>
-							<Link
-								href='/users'
-								className={getLinkClass('/users', true)}>
-								User Management
-							</Link>
-							<Link
-								href='/roles'
-								className={getLinkClass('/roles', true)}>
-								Roles & Permissions
-							</Link>
-							<Link
-								href='/multi-company'
-								className={getLinkClass('/multi-company', true)}>
-								Multi-Company / Branch
-							</Link>
-							<Link
-								href='/localization'
-								className={getLinkClass('/localization', true)}>
-								Localization (Currency / Language / Taxes)
-							</Link>
-							<Link
-								href='/workflow'
-								className={getLinkClass('/workflow', true)}>
-								Workflow Automation
-							</Link>
-							<Link
-								href='/audit-logs'
-								className={getLinkClass('/audit-logs', true)}>
-								Audit Logs
-							</Link>
-							<Link
-								href='/settings'
-								className={getLinkClass('/settings', true)}>
-								Settings
-							</Link>
-						</div>
-					)}
-				</div>
+				{MENU_CONFIG.map((module) => (
+					<div key={module.id}>
+						<button
+							onClick={() => toggleModule(module.id)}
+							className='w-full flex justify-between items-center py-2 px-4 rounded hover:bg-blue-500 dark:hover:bg-gray-800 transition-colors'>
+							{module.label}
+							{openModule === module.id ?
+								<HiChevronUp />
+							:	<HiChevronDown />}
+						</button>
+						{openModule === module.id && (
+							<div className='ml-4 mt-2 space-y-1 text-sm'>
+								{module.subLinks.map((link) => (
+									<Link
+										key={link.href}
+										href={link.href}
+										className={getLinkClass(link.href, true)}>
+										{link.label}
+									</Link>
+								))}
+							</div>
+						)}
+					</div>
+				))}
 			</nav>
 
 			<div className='p-4 border-t border-blue-500 dark:border-gray-800 text-sm transition-colors'>

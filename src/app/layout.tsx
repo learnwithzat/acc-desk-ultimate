@@ -1,7 +1,5 @@
 /** @format */
 
-'use client';
-
 import './globals.css';
 import { ThemeProvider } from './context/ThemeContext';
 import MainLayout from '@/components/MainLayout';
